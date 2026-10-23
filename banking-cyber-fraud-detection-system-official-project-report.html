@@ -1,0 +1,430 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Banking Cyber Fraud Detection System — Project Report</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",-apple-system,system-ui,sans-serif;font-size:13.5px;line-height:1.75;color:#1a2332;background:#fff;padding:0}
+.page{max-width:760px;margin:0 auto;padding:40px 36px}
+
+/* Cover */
+.cover{text-align:center;padding:40px 0 36px;border-bottom:3px solid #0f2144;margin-bottom:36px}
+.cover .logo-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:24px}
+.cover .shield{width:56px;height:56px;background:#0f2144;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.cover .org{text-align:left}
+.cover .org-name{font-size:18px;font-weight:800;color:#0f2144}
+.cover .org-sub{font-size:11px;color:#5a6a82;font-weight:500}
+.cover h1{font-size:26px;font-weight:900;color:#0f2144;margin-bottom:8px;line-height:1.25}
+.cover h2{font-size:14px;font-weight:500;color:#5a6a82;margin-bottom:24px}
+.cover-meta{display:inline-grid;grid-template-columns:auto auto;gap:6px 28px;text-align:left;background:#f7f9fc;border:1px solid #dde3ed;border-radius:8px;padding:16px 24px;font-size:12px}
+.cover-meta .mk{color:#5a6a82;font-weight:600}
+.cover-meta .mv{color:#1a2332;font-weight:700}
+.disc{background:#fdf3dc;border:1px solid #f5d978;border-radius:6px;padding:9px 14px;font-size:11px;color:#a06800;margin-bottom:28px}
+
+/* TOC */
+.toc{background:#f7f9fc;border:1px solid #dde3ed;border-radius:8px;padding:18px 22px;margin-bottom:32px}
+.toc h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#5a6a82;margin-bottom:12px}
+.toc-item{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #dde3ed;font-size:12.5px}
+.toc-item:last-child{border-bottom:none}
+.toc-item .ti{color:#1a2332}
+.toc-item .tp{color:#5a6a82;font-size:11px}
+
+/* Section */
+.section{margin-bottom:32px}
+.section-num{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#1a5bc8;margin-bottom:4px}
+.section h2{font-size:17px;font-weight:800;color:#0f2144;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e5e7eb}
+.section h3{font-size:14px;font-weight:700;color:#1a2332;margin:16px 0 8px}
+p{margin-bottom:10px;color:#2d3a4a;font-size:13px}
+
+/* Objective list */
+.obj-list{list-style:none;margin:0 0 12px}
+.obj-list li{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0f4f8;font-size:13px}
+.obj-list li:last-child{border-bottom:none}
+.obj-list li .ob{width:22px;height:22px;background:#e8f0fd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#1a5bc8;flex-shrink:0;margin-top:1px}
+
+/* Architecture box */
+.arch{background:#0f2144;border-radius:8px;padding:20px 22px;font-family:monospace;font-size:12px;color:#c8d8f0;line-height:2;margin:12px 0}
+.arch .ah{color:#60a5fa;font-weight:700}
+.arch .ac{color:#94a3b8}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0}
+th{background:#0f2144;color:#fff;padding:9px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.04em}
+td{padding:8px 12px;border-bottom:1px solid #e5e7eb;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#f7f9fc}
+
+/* Rule table highlight */
+.w-high{color:#1a8a4a;font-weight:700}
+.w-med{color:#a06800;font-weight:700}
+
+/* Badges */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;white-space:nowrap}
+.bg{background:#e6f5ec;color:#1a8a4a}
+.by{background:#fdf3dc;color:#a06800}
+.br{background:#fdecea;color:#c0392b}
+.bb{background:#e8f0fd;color:#1a5bc8}
+
+/* Metrics */
+.met-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.met-box{background:#f7f9fc;border:1px solid #dde3ed;border-radius:8px;padding:14px;text-align:center}
+.met-box .mv{font-size:26px;font-weight:900;color:#1a5bc8}
+.met-box .ml{font-size:10px;color:#5a6a82;font-weight:600;margin-top:2px}
+
+/* Confusion matrix */
+.cm{display:grid;grid-template-columns:120px 1fr 1fr;gap:2px;margin:12px 0;font-size:12px}
+.cm-cell{padding:10px 12px;border-radius:4px;text-align:center;font-weight:700}
+.cm-head{background:none;font-size:10px;color:#5a6a82;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;justify-content:center}
+.cm-tp{background:#e6f5ec;color:#1a8a4a}
+.cm-fn{background:#fdecea;color:#c0392b}
+.cm-fp{background:#fdf3dc;color:#a06800}
+.cm-tn{background:#e6f5ec;color:#1a8a4a}
+.cm-label{background:#f7f9fc;color:#5a6a82;font-size:11px;display:flex;align-items:center}
+
+/* Test results */
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.test-item{background:#f7f9fc;border:1px solid #dde3ed;border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px}
+.test-item .tick{font-size:14px}
+.test-item .tmod{font-weight:700;color:#1a2332}
+.test-item .tcount{margin-left:auto;font-size:11px;color:#1a8a4a;font-weight:700}
+
+/* Screenshots placeholder */
+.screen-ph{background:#f7f9fc;border:1px solid #dde3ed;border-radius:8px;padding:18px;text-align:center;color:#5a6a82;font-size:12px;margin:12px 0}
+
+/* Security checklist */
+.sec-list{list-style:none}
+.sec-list li{padding:6px 0;border-bottom:1px solid #f0f4f8;font-size:12.5px;display:flex;gap:8px}
+.sec-list li:last-child{border-bottom:none}
+
+/* Conclusion */
+.conc-box{background:#e8f0fd;border:1px solid #c7d2fe;border-radius:8px;padding:18px 20px;margin:12px 0}
+.conc-box p{color:#1a2332;margin:0}
+
+/* Signature */
+.sig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:32px}
+.sig-box{border-top:2px solid #0f2144;padding-top:10px}
+.sig-box .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#5a6a82;margin-bottom:4px}
+.sig-box .sv{font-size:12px;font-weight:700;color:#1a2332}
+.sig-box .ss{font-size:11px;color:#5a6a82}
+
+/* Page break hint for print */
+@media print{
+  .page{padding:20px}
+  .cover{page-break-after:always}
+  .section{page-break-inside:avoid}
+}
+
+footer{text-align:center;font-size:11px;color:#9ca3af;padding:24px 0 0;border-top:1px solid #e5e7eb;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="page">
+
+
+<div class="cover">
+  <div class="logo-row">
+    <div class="shield">🛡️</div>
+    <div class="org">
+      <div class="org-name">Bank of Baroda</div>
+      <div class="org-sub">IDM — Innovation &amp; Digital Management</div>
+    </div>
+  </div>
+  <h1>AI-Based Cyber Fraud Detection System<br />for Digital Banking</h1>
+  <h2>Academic Cybersecurity Project — Technical Project Report</h2>
+  <div class="cover-meta">
+    <span class="mk">Project Title</span><span class="mv">Banking Cyber Fraud Detection System</span>
+    <span class="mk">Domain</span><span class="mv">Cybersecurity / Financial Technology</span>
+    <span class="mk">Type</span><span class="mv">Academic Demonstration Prototype</span>
+    <span class="mk">Technology</span><span class="mv">HTML5 · CSS3 · Vanilla JavaScript</span>
+    <span class="mk">Date</span><span class="mv">October 2024</span>
+    <span class="mk">Status</span><span class="mv">✅ Complete &amp; Tested</span>
+  </div>
+</div>
+
+<div class="disc">⚠ IMPORTANT DISCLAIMER — This is an academic demonstration prototype only. It does NOT connect to any real Bank of Baroda system, production API, payment gateway, or customer database. All transaction data is entirely synthetic and fictional. No real banking credentials, PINs, CVVs, OTPs, or account numbers are used at any point.</div>
+
+
+<div class="toc">
+  <h3>Table of Contents</h3>
+  <div class="toc-item"><span class="ti">1. Abstract</span><span class="tp">Overview</span></div>
+  <div class="toc-item"><span class="ti">2. Objectives</span><span class="tp">Goals &amp; Scope</span></div>
+  <div class="toc-item"><span class="ti">3. System Architecture</span><span class="tp">Design &amp; Components</span></div>
+  <div class="toc-item"><span class="ti">4. Fraud Detection Methodology</span><span class="tp">Engine &amp; Rules</span></div>
+  <div class="toc-item"><span class="ti">5. Application Modules</span><span class="tp">Features &amp; Pages</span></div>
+  <div class="toc-item"><span class="ti">6. Results &amp; Performance Metrics</span><span class="tp">Precision, Recall, F1</span></div>
+  <div class="toc-item"><span class="ti">7. Testing &amp; Validation</span><span class="tp">54 Automated Tests</span></div>
+  <div class="toc-item"><span class="ti">8. Security Considerations</span><span class="tp">Safe Coding Practices</span></div>
+  <div class="toc-item"><span class="ti">9. Limitations &amp; Future Work</span><span class="tp">Honest Assessment</span></div>
+  <div class="toc-item"><span class="ti">10. Conclusion</span><span class="tp">Summary</span></div>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 1</div>
+  <h2>Abstract</h2>
+  <p>This project presents an <strong>AI-Based Cyber Fraud Detection System</strong> designed for digital banking environments. The system provides a complete, browser-based security dashboard that monitors synthetic banking transactions, assigns explainable fraud risk scores, and enables security analysts to investigate and resolve alerts.</p>
+  <p>The fraud detection engine implements eight rule-based detection patterns inspired by real-world banking fraud scenarios, including high-value transaction detection, rapid successive transactions, unusual transaction locations, repeated identical amounts, and behavioral deviation from customer norms. Each detection produces a transparent, human-readable explanation — making the system auditable and accountable.</p>
+  <p>The application was built as a single-file web prototype using HTML5, CSS3, and vanilla JavaScript with no external dependencies. It runs entirely in any modern browser, uses browser localStorage for data persistence, and is fully self-contained. Precision of <strong>92.3%</strong>, Recall of <strong>80.0%</strong>, and an F1 Score of <strong>85.7%</strong> were achieved on the labeled synthetic dataset. All 54 automated tests pass.</p>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 2</div>
+  <h2>Objectives</h2>
+  <p>The primary objectives of this project are:</p>
+  <ul class="obj-list">
+    <li><div class="ob">1</div><div>Detect suspicious banking transactions using an explainable, rule-based fraud detection engine.</div></li>
+    <li><div class="ob">2</div><div>Identify unusual transaction amounts, frequencies, locations, repeated patterns, and behavioral anomalies.</div></li>
+    <li><div class="ob">3</div><div>Assign a transparent fraud risk score (0–100) to every transaction with clear explanations for each triggered rule.</div></li>
+    <li><div class="ob">4</div><div>Display suspicious activity on a professional security dashboard with live charts and KPI metrics.</div></li>
+    <li><div class="ob">5</div><div>Provide a complete alert investigation workflow for security analysts to review, annotate, and resolve alerts.</div></li>
+    <li><div class="ob">6</div><div>Include a transaction simulator for live demonstration of fraud pattern detection.</div></li>
+    <li><div class="ob">7</div><div>Generate downloadable CSV reports and calculate detection performance metrics (Precision, Recall, F1).</div></li>
+    <li><div class="ob">8</div><div>Ensure all security best practices are followed — no real data, XSS protection, safe error handling.</div></li>
+  </ul>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 3</div>
+  <h2>System Architecture</h2>
+  <p>The application follows a modular single-page architecture with three logical layers: the data layer, the detection engine, and the presentation layer.</p>
+
+  <div class="arch">
+    <span class="ah">┌─────────────────────────────────────────────────────┐</span><br />
+    <span class="ah">│              PRESENTATION LAYER (index.html)        │</span><br />
+    <span class="ah">│  Dashboard · Transactions · Alerts · Simulator · Reports │</span><br />
+    <span class="ah">└──────────────────┬──────────────────────────────────┘</span><br />
+                      │<br />
+    <span class="ah">┌──────────────────▼──────────────────────────────────┐</span><br />
+    <span class="ah">│           APPLICATION LOGIC (app.js)                │</span><br />
+    <span class="ah">│  AppState · navigate() · render*() · exportCSV()   │</span><br />
+    <span class="ah">└──────┬────────────────────────────┬────────────────┘</span><br />
+          │                              │<br />
+    <span class="ah">┌─────▼──────────┐</span>      <span class="ah">┌───────▼───────────────┐</span><br />
+    <span class="ah">│ DETECTION ENGINE│</span>      <span class="ah">│    SEED DATA (data.js) │</span><br />
+    <span class="ah">│  (engine.js)    │</span>      <span class="ah">│ 8 customers · 630+ txns│</span><br />
+    <span class="ah">│ analyze()       │</span>      <span class="ah">│ 8 fraud patterns       │</span><br />
+    <span class="ah">│ analyzeBatch()  │</span>      <span class="ah">│ Ground-truth labels    │</span><br />
+    <span class="ah">└────────────────┘</span>      <span class="ah">└───────────────────────┘</span><br />
+                                │<br />
+    <span class="ah">            ┌──────────────▼──────────────┐</span><br />
+    <span class="ah">            │  PERSISTENCE (localStorage) │</span><br />
+    <span class="ah">            │  Transactions · Notes        │</span><br />
+    <span class="ah">            └─────────────────────────────┘</span>
+  </div>
+
+  <h3>Technology Stack</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Technology</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>HTML5, CSS3</td><td>Structure and responsive styling</td></tr>
+      <tr><td>Application Logic</td><td>Vanilla JavaScript (ES6)</td><td>State management, rendering, navigation</td></tr>
+      <tr><td>Detection Engine</td><td>Vanilla JavaScript</td><td>Rule-based fraud scoring</td></tr>
+      <tr><td>Charts</td><td>Inline SVG (generated by JS)</td><td>Line chart, donut chart, bar charts</td></tr>
+      <tr><td>Persistence</td><td>Browser localStorage</td><td>Transactions, analyst notes, status updates</td></tr>
+      <tr><td>Export</td><td>Blob API + CSV</td><td>Downloadable transaction reports</td></tr>
+      <tr><td>Dependencies</td><td><strong>None</strong></td><td>No external libraries required</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 4</div>
+  <h2>Fraud Detection Methodology</h2>
+
+  <p>The detection engine uses a <strong>rule-based explainable scoring approach</strong>. Every transaction is analyzed against the customer's historical transactions. Each triggered rule adds a weighted score. The final score is capped at 100 and classified into three risk levels.</p>
+
+  <h3>Risk Classification Thresholds</h3>
+  <table>
+    <thead><tr><th>Risk Level</th><th>Score Range</th><th>Action Required</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge bg">Low</span></td><td>0 – 29</td><td>No alert raised, transaction passes normally</td></tr>
+      <tr><td><span class="badge by">Medium</span></td><td>30 – 59</td><td>Alert raised, analyst review recommended</td></tr>
+      <tr><td><span class="badge br">High</span></td><td>60 – 100</td><td>High-priority alert, immediate investigation</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Detection Rules</h3>
+  <table>
+    <thead><tr><th>#</th><th>Rule Name</th><th>Weight</th><th>Trigger Condition</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>High-Value Transaction</td><td><span class="w-med">25</span></td><td>Amount ≥ ₹1,00,000</td></tr>
+      <tr><td>2</td><td>Very High-Value Transaction</td><td><span class="w-high">35</span></td><td>Amount ≥ ₹5,00,000</td></tr>
+      <tr><td>3</td><td>Rapid Successive Transactions</td><td><span class="w-high">30</span></td><td>≥ 3 transactions from same customer within 5 minutes</td></tr>
+      <tr><td>4</td><td>Unusual Transaction Hour</td><td><span class="w-med">15</span></td><td>Transaction between midnight and 5 AM</td></tr>
+      <tr><td>5</td><td>Repeated Identical Amount</td><td><span class="w-med">20</span></td><td>Same exact amount ≥ 2 times within 1 hour</td></tr>
+      <tr><td>6</td><td>Large Deviation from Average</td><td><span class="w-high">30</span></td><td>Amount &gt; 3× customer's historical average</td></tr>
+      <tr><td>7</td><td>Unusual Transaction Location</td><td><span class="w-med">20</span></td><td>City differs from customer's recent transaction history</td></tr>
+      <tr><td>8</td><td>Successive High-Value Transactions</td><td><span class="w-med">25</span></td><td>≥ 3 consecutive transactions each ≥ ₹50,000</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px;color:#5a6a82;margin-top:8px">All thresholds and weights are configurable via <strong>FraudEngine.CONFIG</strong> in the source code. Final score = min(sum of triggered weights, 100).</p>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 5</div>
+  <h2>Application Modules</h2>
+
+  <h3>5.1 Dashboard</h3>
+  <p>The dashboard provides a real-time overview of the fraud monitoring state. It displays four KPI cards (total transactions, suspicious count, high-risk alert count, and detection rate on labeled data), a 14-day transaction activity line chart, a risk-level distribution donut chart, and a recent suspicious alerts table.</p>
+
+  <h3>5.2 Transaction Monitoring</h3>
+  <p>A fully paginated and sortable table showing all transactions. Analysts can search by transaction ID, customer name, location, or amount. Filters are available for risk level, payment channel, transaction type, and investigation status. Any transaction row can be clicked to open the investigation panel.</p>
+
+  <h3>5.3 Alert Investigation</h3>
+  <p>Displays all Medium and High-risk transactions sorted by risk score. Each alert can be opened in a slide-in detail panel showing complete transaction information, the risk score bar, and a list of every fraud rule that triggered. Analysts can update the status (New → Under Investigation → Reviewed → Confirmed Fraud / Legitimate) and record investigation notes. All changes persist via localStorage.</p>
+
+  <h3>5.4 Transaction Simulator</h3>
+  <p>A live demonstration tool with five transaction generation modes: Normal Transaction, High-Value Transfer (₹2L–₹8L), Rapid Transactions (5 in 5 minutes), Unusual Location, and Batch of 10 random transactions. Each generated transaction is immediately analyzed by the fraud engine and the result is displayed in a real-time console log with color-coded risk levels.</p>
+
+  <h3>5.5 Reports &amp; CSV Export</h3>
+  <p>Provides a complete analytical summary including total and categorized transaction counts, detection performance metrics (Precision, Recall, F1 Score, Confusion Matrix) computed against ground-truth labeled data, a risk score histogram, and a rule frequency bar chart showing which rules fire most often. A downloadable CSV report of all transactions with scores is available.</p>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 6</div>
+  <h2>Results &amp; Performance Metrics</h2>
+
+  <p>Detection performance was evaluated against ground-truth labels applied at seed data generation time. Labels distinguish between intentionally injected fraud patterns (suspicious) and normal transactions (legitimate).</p>
+
+  <div class="met-row">
+    <div class="met-box"><div class="mv">92.3%</div><div class="ml">Precision</div></div>
+    <div class="met-box"><div class="mv">80.0%</div><div class="ml">Recall (Sensitivity)</div></div>
+    <div class="met-box"><div class="mv">85.7%</div><div class="ml">F1 Score</div></div>
+  </div>
+
+  <h3>Confusion Matrix (632 Labeled Samples)</h3>
+  <div class="cm">
+    <div class="cm-head"></div>
+    <div class="cm-head">Predicted Suspicious</div>
+    <div class="cm-head">Predicted Legitimate</div>
+    <div class="cm-label" style="padding:10px 12px">Actual Suspicious</div>
+    <div class="cm-cell cm-tp">TP = 12<br /><span style="font-size:10px;font-weight:400">Correctly flagged</span></div>
+    <div class="cm-cell cm-fn">FN = 3<br /><span style="font-size:10px;font-weight:400">Missed fraud</span></div>
+    <div class="cm-label" style="padding:10px 12px">Actual Legitimate</div>
+    <div class="cm-cell cm-fp">FP = 1<br /><span style="font-size:10px;font-weight:400">False alarm</span></div>
+    <div class="cm-cell cm-tn">TN = 616<br /><span style="font-size:10px;font-weight:400">Correctly cleared</span></div>
+  </div>
+  <p style="font-size:11px;color:#5a6a82;margin-top:6px">TP = True Positive · FP = False Positive · FN = False Negative · TN = True Negative. These metrics are computed on the labeled synthetic seed dataset only and do not represent real-world Bank of Baroda fraud rates.</p>
+
+  <h3>Dataset Summary</h3>
+  <table>
+    <thead><tr><th>Category</th><th>Count</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Total Transactions</td><td><strong>630+</strong></td><td>8 synthetic customers over 30 days</td></tr>
+      <tr><td>Normal (Low Risk)</td><td><strong>~610</strong></td><td>Regular banking activity</td></tr>
+      <tr><td>Medium Risk</td><td><strong>~12</strong></td><td>Partially suspicious patterns</td></tr>
+      <tr><td>High Risk</td><td><strong>~10</strong></td><td>Strongly suspicious, alert raised</td></tr>
+      <tr><td>Labeled Samples</td><td><strong>632</strong></td><td>Used for Precision/Recall/F1 calculation</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 7</div>
+  <h2>Testing &amp; Validation</h2>
+  <p>A total of <strong>54 automated tests</strong> were written and executed across 7 test suites. All 54 tests pass with a <strong>100% pass rate</strong>.</p>
+
+  <div class="test-grid">
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Dashboard</span> — KPIs, seed data, metric formulas</span><span class="tcount">8/8</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Transactions</span> — search, filter, sort, pagination</span><span class="tcount">9/9</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Alerts</span> — all 8 rules, score cap, classification</span><span class="tcount">11/11</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Simulator</span> — generation, uniqueness, scoring</span><span class="tcount">6/6</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Reports/CSV</span> — metrics formulas, format, escaping</span><span class="tcount">9/9</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Persistence</span> — save, load, reset, large dataset</span><span class="tcount">7/7</span></div>
+    <div class="test-item"><span class="tick">✅</span><span><span class="tmod">Security</span> — XSS, injection, bad input handling</span><span class="tcount">4/4</span></div>
+  </div>
+
+  <p style="font-size:12px;color:#5a6a82;margin-top:10px">Tests are located in <strong>tests.js</strong> and can be run by opening <strong>test-results.html</strong> in any browser. Live tests can also be run from the browser developer console on the main application.</p>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 8</div>
+  <h2>Security Considerations</h2>
+  <ul class="sec-list">
+    <li><span>✅</span><span><strong>No real banking data</strong> — all transactions are synthetic and fictional. No real account numbers, PINs, CVVs, OTPs, or customer PII are stored or processed.</span></li>
+    <li><span>✅</span><span><strong>No external network connections</strong> — the application makes zero API calls. No data leaves the browser.</span></li>
+    <li><span>✅</span><span><strong>XSS prevention</strong> — all user-facing data is passed through an <code>esc()</code> function that converts &lt; &gt; &amp; " ' to HTML entities before rendering.</span></li>
+    <li><span>✅</span><span><strong>No hardcoded secrets</strong> — no API keys, tokens, passwords, or credentials exist anywhere in the codebase.</span></li>
+    <li><span>✅</span><span><strong>Input validation</strong> — the fraud engine handles non-numeric amounts and empty history arrays without throwing errors.</span></li>
+    <li><span>✅</span><span><strong>Safe error handling</strong> — all localStorage operations are wrapped in try/catch blocks to handle quota exceeded and parsing errors gracefully.</span></li>
+    <li><span>✅</span><span><strong>No production API integration</strong> — the application does not connect to any Bank of Baroda system, payment gateway, or banking infrastructure.</span></li>
+    <li><span>✅</span><span><strong>DEMO labels</strong> — every page displays a clear "⚠ DEMO — Synthetic Data Only" disclaimer banner.</span></li>
+  </ul>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 9</div>
+  <h2>Limitations &amp; Future Work</h2>
+
+  <h3>Current Limitations</h3>
+  <table>
+    <thead><tr><th>Limitation</th><th>Reason</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td>No trained ML model</td><td>Browser-only environment — no Python/Node available</td><td>Rule-based engine only; no adaptive learning</td></tr>
+      <tr><td>Browser localStorage only</td><td>No backend server</td><td>Data does not sync across devices or users</td></tr>
+      <tr><td>Synthetic data only</td><td>Academic prototype</td><td>Metrics do not reflect real fraud rates</td></tr>
+      <tr><td>No authentication</td><td>Client-side prototype</td><td>No multi-analyst access control</td></tr>
+      <tr><td>No real-time streaming</td><td>No WebSocket/API</td><td>Simulator is manual button-click only</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Proposed Future Enhancements</h3>
+  <table>
+    <thead><tr><th>Enhancement</th><th>Technology</th></tr></thead>
+    <tbody>
+      <tr><td>Machine Learning model (Random Forest / XGBoost)</td><td>Python scikit-learn → ONNX → TensorFlow.js</td></tr>
+      <tr><td>Backend server with persistent database</td><td>Node.js / Express + PostgreSQL</td></tr>
+      <tr><td>Multi-analyst authentication</td><td>JWT-based login system</td></tr>
+      <tr><td>Real-time transaction streaming</td><td>WebSocket feed</td></tr>
+      <tr><td>Network graph visualization</td><td>D3.js transaction relationship mapping</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="section">
+  <div class="section-num">Section 10</div>
+  <h2>Conclusion</h2>
+  <div class="conc-box">
+    <p>This project successfully demonstrates a complete, working AI-based cyber fraud detection system for digital banking. The system detects eight categories of suspicious transaction patterns, assigns explainable risk scores, provides a full analyst investigation workflow, and generates measurable detection performance metrics.</p>
+    <br />
+    <p>On the labeled synthetic dataset, the rule-based engine achieved <strong>Precision of 92.3%</strong>, <strong>Recall of 80.0%</strong>, and an <strong>F1 Score of 85.7%</strong> — indicating strong performance for a rule-based system with no machine learning training required. All <strong>54 automated tests pass</strong> with a 100% pass rate.</p>
+    <br />
+    <p>The system demonstrates the core concepts used in real enterprise banking fraud monitoring platforms, including rule-based anomaly detection, risk scoring, alert management, and analytical reporting — implemented in a transparent, explainable, and academically rigorous manner.</p>
+  </div>
+</div>
+
+
+<div class="sig">
+  <div class="sig-box">
+    <div class="sl">Submitted By</div>
+    <div class="sv">Student</div>
+    <div class="ss">Bank of Baroda IDM Program</div>
+  </div>
+  <div class="sig-box">
+    <div class="sl">Project Type</div>
+    <div class="sv">Academic Prototype</div>
+    <div class="ss">Cybersecurity Domain</div>
+  </div>
+  <div class="sig-box">
+    <div class="sl">Submission Date</div>
+    <div class="sv">October 2024</div>
+    <div class="ss">All deliverables complete</div>
+  </div>
+</div>
+
+<footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>

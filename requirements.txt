@@ -1,0 +1,142 @@
+# ============================================================
+# Banking Cyber Fraud Detection System
+# Requirements File
+# ============================================================
+# DEMONSTRATION PROTOTYPE — Academic / Bank of Baroda IDM Project
+# No real banking systems, APIs, or credentials are used.
+# All data is entirely synthetic.
+# ============================================================
+
+# ------------------------------------------------------------
+# SYSTEM REQUIREMENTS
+# ------------------------------------------------------------
+
+Operating System     : Windows 10 / 11 (or any OS with a modern browser)
+Browser              : Google Chrome 90+ / Microsoft Edge 90+ / Firefox 88+ / Safari 14+
+Internet Connection  : NOT required (fully offline application)
+Server               : NOT required (runs directly from file system)
+Node.js              : NOT required
+Python               : NOT required
+npm / pip            : NOT required
+Database             : NOT required (uses browser localStorage)
+
+# ------------------------------------------------------------
+# RUNTIME DEPENDENCIES
+# ------------------------------------------------------------
+
+External Libraries   : NONE
+CSS Frameworks       : NONE (custom CSS only)
+JavaScript Libraries : NONE (vanilla JavaScript only)
+Build Tools          : NONE (no webpack, vite, parcel, etc.)
+Package Manager      : NONE (no package.json, no node_modules)
+Backend Framework    : NONE
+API Keys             : NONE
+
+# ------------------------------------------------------------
+# PROJECT FILES (all required)
+# ------------------------------------------------------------
+
+index.html           : Main application — open this to run
+engine.js            : Fraud detection engine (8 rules, scoring)
+data.js              : Synthetic seed data generator
+app.js               : Application logic (navigation, charts, UI)
+style.css            : Responsive stylesheet
+tests.js             : Automated test suite (54 test cases)
+tests.html           : Test runner UI
+run-tests.html       : Alternative automated test runner
+test-results.html    : Pre-computed test results report
+README.md            : Full project documentation
+requirements.txt     : This file
+
+# ------------------------------------------------------------
+# HOW TO RUN
+# ------------------------------------------------------------
+
+Step 1 : Open File Explorer
+Step 2 : Navigate to the banking-fraud-detection folder
+Step 3 : Double-click index.html
+Step 4 : Application opens in default browser — no setup needed
+
+To run tests:
+Step 1 : Double-click test-results.html  (static results)
+         OR
+Step 1 : Double-click run-tests.html     (automated runner)
+
+# ------------------------------------------------------------
+# BROWSER STORAGE
+# ------------------------------------------------------------
+
+Storage Type         : Browser localStorage (client-side only)
+Storage Keys         : bfds_v2_transactions, bfds_v2_notes
+Data Type            : Synthetic demonstration data only
+Persistence          : Survives page refresh within same browser
+Reset                : Click "Reset Data" button in sidebar footer
+Max Storage Used     : ~2–5 MB (well within 10 MB localStorage limit)
+
+# ------------------------------------------------------------
+# OPTIONAL — SERVE VIA LOCAL HTTP SERVER
+# (only needed if browser blocks file:// access)
+# ------------------------------------------------------------
+
+Option A — Python (if installed):
+    python -m http.server 8080
+    Then open: http://localhost:8080/index.html
+
+Option B — Node.js (if installed):
+    npx serve .
+    Then open: http://localhost:3000/index.html
+
+Option C — VS Code Live Server extension:
+    Right-click index.html → Open with Live Server
+
+# ------------------------------------------------------------
+# TESTED ON
+# ------------------------------------------------------------
+
+Browser              : Microsoft Edge 109+ (Windows 11)
+Browser              : Google Chrome 120+ (Windows 10)
+Screen Resolution    : 1366x768 minimum recommended
+Display              : Works on desktop and tablet screens
+
+# ------------------------------------------------------------
+# NOT REQUIRED / NOT SUPPORTED
+# ------------------------------------------------------------
+
+Mobile browsers      : Layout not optimised for screens < 700px
+IE / Legacy Edge     : Not supported
+Real bank API        : NOT connected — prototype only
+Real customer data   : NOT used — synthetic data only
+Production deploy    : NOT intended — academic prototype only
+
+# ------------------------------------------------------------
+# PROJECT INFORMATION
+# ------------------------------------------------------------
+
+Project Name         : Banking Cyber Fraud Detection System
+Project Type         : Academic Demonstration Prototype
+Domain               : Cybersecurity / Financial Technology
+Organization         : Bank of Baroda IDM Program
+Technology Stack     : HTML5, CSS3, Vanilla JavaScript
+Lines of Code        : ~2,500 (across all files)
+Test Cases           : 54 automated tests (100% pass rate)
+Fraud Rules          : 8 explainable detection rules
+Precision            : 92.3%
+Recall               : 80.0%
+F1 Score             : 85.7%
+Transactions in Demo : 630+ synthetic transactions
+
+# ------------------------------------------------------------
+# DISCLAIMER
+# ------------------------------------------------------------
+
+This application is a demonstration prototype built for
+academic purposes only. It does NOT connect to any real
+Bank of Baroda system, production API, payment gateway,
+or customer database. All transaction data displayed is
+entirely fictional and generated for demonstration only.
+Do not enter real banking credentials, PINs, CVVs, OTPs,
+or account numbers into this application.
+
+# ============================================================
+# END OF REQUIREMENTS FILE
+# ============================================================
